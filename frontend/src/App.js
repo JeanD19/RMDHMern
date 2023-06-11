@@ -20,9 +20,9 @@ function App() {
   }
   return (
     <div>
-      <nav className="navbar navbar-expand navbar-dark bg-dark">
+      <nav className="navbar navbar-expand navbar-dark bg-dark ps-2">
         <a href="/restaurants" className="navbar-brand">
-          Restaunrant Reviews
+          Restaurant Reviews
         </a>
         <div className="navbar-nav mr-auto">
           <li className="nav-item">
@@ -49,13 +49,13 @@ function App() {
       </nav>
 
       <div className="container mt-3">
-        Hello World
         <Routes>
-          {/* <Route
+
+          <Route
             exact
-            path={["/", "/restaurants"]}
-            Component={RestaurantsList}
-          /> */}
+            path="/"
+            element={<RestaurantsList />}
+          />
 
           <Route
             exact
@@ -63,18 +63,33 @@ function App() {
             element={<RestaurantsList />}
           />
 
-          <Route
+          <Route 
+          exact 
+          path="/restaurants/:id"
+          //element={<Restaurant user={user}
+          element={<Restaurant user={user}/>}/>
+
+          {/* <Route
+            path="/restaurants/:id"
+            render={(props) => (
+              <Restaurant {...props} user={user}/>
+            )}
+          /> */}
+
+          {/* <Route
+            exact path="/restaurants/:id/review"
+            render={(props) => <AddReview {...props} user={user}/>}
+          /> */}
+          <Route 
+            exact
             path="/restaurants/:id/review"
-            render={(props) => <AddReview {...props} user={user} />}
+            element={<AddReview/>}
           />
 
           <Route
-            path="/restaurants/:id"
-            render={(props) => <Restaurant {...props} user={user} />}
-          />
-          <Route
+            exact 
             path="/login"
-            render={(props) => <Login {...props} login={login} />}
+            element={<Login login={login}/>} //This works yay!
           />
         </Routes>
       </div>
