@@ -14,6 +14,8 @@ const Restaurant = ({user}) => {
     reviews: []
   };
 
+  // console.log(user)
+  // console.log("The id " + id)
 
   const [restaurant, setRestaurant] = useState(initialRestaurantState);
 
@@ -21,7 +23,7 @@ const Restaurant = ({user}) => {
     RestaurantDataService.get(id).then(
       response => {
         setRestaurant(response.data);
-        console.log(response.data);
+        //console.log(response.data);
       })
       .catch(e => {
         console.log(e);
@@ -33,7 +35,7 @@ const Restaurant = ({user}) => {
   }, [id]);
 
   const deleteReview = (reviewId, index) => {
-    RestaurantDataService.deleteReview(reviewId).then(
+    RestaurantDataService.deleteReview(reviewId, user.id).then(
       response => {
         setRestaurant((prevState) => {
           prevState.reviews.splice(index, 1)
@@ -72,17 +74,16 @@ const Restaurant = ({user}) => {
                           <strong>User: </strong>{review.name}<br/>
                           <strong>Date: </strong>{review.date}
                         </p>
-                        {user && user.id === review.user_id &&
+
+                        {user && user.id === review.user_id ? (
                           <div className="row">
                             <a onClick={() => deleteReview(review._id, index)} className="btn btn-primary col-lg-5 mx-1 mb-1">Delete</a>
+                            {console.log(review)} 
                             <Link to={{
                               pathname: "/restaurants/" + id + "/review",
-                              state: {
-                                currentReview: review
-                              }
-                            }} className="btn btn-primary col-lg-5 mx-1 mb-1">Edit</Link>
+                            }} state={{ currentReview: review }} className="btn btn-primary col-lg-5 mx-1 mb-1">Edit</Link>
                           </div>
-                        } 
+                        ):null}
                       </div>
                     </div>
                   </div>
